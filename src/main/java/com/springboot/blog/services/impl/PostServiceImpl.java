@@ -5,7 +5,10 @@ import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.PostDto;
 import com.springboot.blog.repository.PostRepository;
 import com.springboot.blog.services.PostService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +54,11 @@ public class PostServiceImpl implements PostService {
         return mapToDto(updatedPost);
     }
 
+    @Override
+    public void deletePostById(long id) {
+        Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","id",id));
+        postRepository.delete(post);
+    }
     private PostDto mapToDto(Post post){
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
@@ -66,4 +74,5 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDto.getContent());
         return post;
     }
+
 }
