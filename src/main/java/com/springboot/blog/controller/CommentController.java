@@ -6,9 +6,7 @@ import com.springboot.blog.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/")
 public class CommentController {
@@ -43,5 +41,13 @@ public class CommentController {
             @RequestBody CommentDto commentDto
     ){
         return new ResponseEntity<>(commentService.updateComment(postid, commentId, commentDto),HttpStatus.OK);
+    }
+    @DeleteMapping("/posts/{postId}/comments/{id}")
+    public ResponseEntity<String> deleteComment(
+            @PathVariable(value = "postId") long postid,
+            @PathVariable(value = "id") long commentId
+    ){
+        commentService.deleteComment(postid,commentId);
+        return new ResponseEntity<>("comment deleted",HttpStatus.OK);
     }
 }
