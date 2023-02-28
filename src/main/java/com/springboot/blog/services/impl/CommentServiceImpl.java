@@ -1,5 +1,4 @@
 package com.springboot.blog.services.impl;
-
 import com.springboot.blog.entity.Comment;
 import com.springboot.blog.entity.Post;
 import com.springboot.blog.exception.BlogAPIException;
@@ -11,10 +10,8 @@ import com.springboot.blog.services.CommentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
 public class CommentServiceImpl implements CommentService {
 

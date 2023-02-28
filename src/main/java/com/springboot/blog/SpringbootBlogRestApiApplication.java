@@ -12,6 +12,7 @@ public class SpringbootBlogRestApiApplication {
 		return new ModelMapper();
 	}
 	public static void main(String[] args) {
+
 		SpringApplication.run(SpringbootBlogRestApiApplication.class, args);
 	}
 
