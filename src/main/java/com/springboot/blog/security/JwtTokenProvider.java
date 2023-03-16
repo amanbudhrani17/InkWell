@@ -6,16 +6,15 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.util.Date;
-
 @Component
 public class JwtTokenProvider {
-    @Value("${app-jwt-secret}")
+    @Value("${app.jwt-secret}")
     private String jwtSecret;
     @Value("${app-jwt-expiration-milliseconds}")
     private String jwtExpirationDate;
@@ -23,7 +22,10 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication){
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime()+jwtExpirationDate);
+        long c = currentDate.getTime();
+        long j = Long.parseLong(jwtExpirationDate);
+        System.out.println(c+j);
+        Date expireDate = new Date(c+j);
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -37,7 +39,7 @@ public class JwtTokenProvider {
                 Decoders.BASE64.decode(jwtSecret)
         );
     }
-    public String getusername(String token){
+    public String getUsername(String token){
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key())
                 .build()
@@ -63,4 +65,5 @@ public class JwtTokenProvider {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST,"JWT claims string is empty.");
         }
     }
+
 }
