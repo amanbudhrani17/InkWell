@@ -30,6 +30,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto) {
+        int a = 2;
         Category category = categoryRepository.findById(postDto.getCategoryId())
                 .orElseThrow(()->new ResourceNotFoundException("Category","id", postDto.getCategoryId()));
         Post post = mapToEntity(postDto);
